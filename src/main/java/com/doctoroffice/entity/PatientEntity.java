@@ -11,11 +11,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "TB-PATIENT")
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+//@Setter
+//@Getter
 public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -46,17 +46,75 @@ public class PatientEntity {
     @Column(name = "INSURANCE_CODE")
     private String insuranceCode;
 
-//    public PatientEntity(String nathionalid, String firstname, String lastname, String birthday, String phonenumber, String address, boolean gender, String insurance) {
-//    super();
-//    this.nathionalid=nathionalid;
-//    this.firstname=firstname;
-//    this.lastname=lastname;
-//    this.birthday=birthday;
-//    this.phonenumber=phonenumber;
-//    this.address=address;
-//    this.gender=gender;
-//    this.insurance=insurance;
-//    }
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public String getNationalId() {
+        return nationalId;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public String getInsuranceCode() {
+        return insuranceCode;
+    }
+
+    public void setInsuranceCode(String insuranceCode) {
+        this.insuranceCode = insuranceCode;
+    }
 }
