@@ -11,9 +11,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "TB-PATIENT")
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @ToString
+//@Builder
 //@Setter
 //@Getter
 public class PatientEntity {
@@ -22,7 +23,7 @@ public class PatientEntity {
     @SequenceGenerator(name = "generator", sequenceName = "SQ_PATIENT", allocationSize = 1)
     private Integer id;
 
-    @Column(name = "NATIONAL_ID", nullable = false, length = 10)
+    @Column(name = "NATIONAL_ID", nullable = false, length = 10 ,unique = true)
     private String nationalId;
 
     @Column(name = "FIRSTNAME")
@@ -45,6 +46,19 @@ public class PatientEntity {
 
     @Column(name = "INSURANCE_CODE")
     private String insuranceCode;
+
+    public PatientEntity(Integer id, String nationalId, String firstname, String lastname, String birthday,
+                         String phoneNumber, String address, Boolean gender, String insuranceCode) {
+        this.id = id;
+        this.nationalId = nationalId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthday = birthday;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.gender = gender;
+        this.insuranceCode = insuranceCode;
+    }
 
     public Integer getId() {
         return id;
