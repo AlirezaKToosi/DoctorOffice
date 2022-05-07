@@ -3,6 +3,7 @@ package com.doctoroffice.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * This entity contains patient information
@@ -11,12 +12,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "TB-PATIENT")
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
-//@Builder
-//@Setter
-//@Getter
+@Builder
+@Setter
+@Getter
 public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -33,7 +34,7 @@ public class PatientEntity {
     private String lastname;
 
     @Column(name = "BIRTHDAY")
-    private String birthday;
+    private Date birthday;
 
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
@@ -42,93 +43,8 @@ public class PatientEntity {
     private String address;
 
     @Column(name = "GENDER")
-    private Boolean gender;
+    private String gender;
 
     @Column(name = "INSURANCE_CODE")
     private String insuranceCode;
-
-    public PatientEntity(Integer id, String nationalId, String firstname, String lastname, String birthday,
-                         String phoneNumber, String address, Boolean gender, String insuranceCode) {
-        this.id = id;
-        this.nationalId = nationalId;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthday = birthday;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.gender = gender;
-        this.insuranceCode = insuranceCode;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNationalId() {
-        return nationalId;
-    }
-
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(Boolean gender) {
-        this.gender = gender;
-    }
-
-    public String getInsuranceCode() {
-        return insuranceCode;
-    }
-
-    public void setInsuranceCode(String insuranceCode) {
-        this.insuranceCode = insuranceCode;
-    }
 }
