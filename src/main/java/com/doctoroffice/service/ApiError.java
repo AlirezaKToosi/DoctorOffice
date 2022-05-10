@@ -2,8 +2,6 @@ package com.doctoroffice.service;
 
 import org.springframework.http.HttpStatus;
 
-import java.lang.reflect.Array;
-import java.net.http.HttpRequest;
 import java.util.Arrays;
 import java.util.List;
 
