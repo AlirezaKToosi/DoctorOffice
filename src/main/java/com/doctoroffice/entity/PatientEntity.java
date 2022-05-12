@@ -24,7 +24,7 @@ public class PatientEntity {
     @SequenceGenerator(name = "generator", sequenceName = "SQ_PATIENT", allocationSize = 1)
     private Integer id;
 
-    @Column(name = "NATIONAL_ID", nullable = false, length = 10 ,unique = true)
+    @Column(name = "NATIONAL_ID", nullable = false, length = 10, unique = true)
     private String nationalId;
 
     @Column(name = "FIRSTNAME")

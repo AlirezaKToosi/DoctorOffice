@@ -3,6 +3,7 @@ package com.doctoroffice.service;
 import com.doctoroffice.dummydata.PatientEntityDummyData;
 import com.doctoroffice.entity.PatientEntity;
 import com.doctoroffice.repository.PatientRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,6 +17,11 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PatientServiceTest {
+    @Before
+    public void setUp() throws Exception {
+        System.out.println("123456789");
+    }
+
     @Mock
     private PatientRepository patientRepository;
     @InjectMocks
@@ -23,6 +29,7 @@ public class PatientServiceTest {
 
     @Test
     public void callFindById_returnValidPatient() {
+
         //Given
         when(patientRepository.findById(1)).thenReturn(Optional.of(PatientEntityDummyData.getValidPatientEntity(1)));
         //When
