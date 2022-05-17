@@ -20,9 +20,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PatientServiceTest {
-    @Before
-    public void setUp() {
-    }
+
 
     @Mock
     private PatientRepository patientRepository;
@@ -68,6 +66,7 @@ public class PatientServiceTest {
         Integer patientEntityId = sut.saveOrUpdate(samplePatient);
         //Then
         assertEquals(patientEntityId, Integer.valueOf(1));
+
     }
 
     @Test
