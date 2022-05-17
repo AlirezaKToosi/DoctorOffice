@@ -25,13 +25,14 @@ public class PatientService {
     //getting all patient information from database
     public List<PatientEntity> getAllPatient() {
         List<PatientEntity> patients = new ArrayList<PatientEntity>();
-        patientRepository.findAll().forEach(patients1 -> patients.add(patients1));
+        patientRepository.findAll().forEach(patients::add);
+
         return patients;
     }
 
     //getting a patient information by id from database
-    public PatientEntity getById(Integer id) {
-        return patientRepository.findById(id).get();
+    public PatientEntity getById(Integer id) throws Exception {
+        return patientRepository.findById(id).orElseThrow(()-> new Exception("This patient id is not available"));
     }
 
     //saving a specific patient by using the method save()
@@ -40,7 +41,8 @@ public class PatientService {
     }
 
     //deletes a specific patient base on it's id by using the method delete()
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id) throws Exception {
+        patientRepository.findById(id).orElseThrow(() ->new Exception("This patient id is not available"));
         patientRepository.deleteById(id);
     }
 }
