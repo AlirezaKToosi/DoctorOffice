@@ -22,7 +22,7 @@ public class PatientController {
 
     //creating a get mapping that returns the specific patient with it's id from database
     @GetMapping("/patient/{id}")
-    private PatientEntity getPatientById(@PathVariable("id") Integer id) {
+    private PatientEntity getPatientById(@PathVariable("id") Integer id) throws Exception {
         return patientService.getById(id);
     }
 
@@ -39,7 +39,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/patient/{id}")
-    private void deleteById(@PathVariable("id") Integer id) {
+    private void deleteById(@PathVariable("id") Integer id) throws Exception {
         patientService.deleteById(id);
     }
 }
