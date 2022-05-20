@@ -34,7 +34,6 @@ public class PatientServiceTest {
         PatientEntity patientEntity = sut.getById(1);
         //Then
         assertEquals(patientEntity.getNationalId(), "0015478596");
-        verify(patientRepository.findById(1));
     }
 
     @Test(expected = Exception.class)
