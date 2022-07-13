@@ -3,6 +3,8 @@ package com.doctoroffice.service;
 import com.doctoroffice.dummydata.PatientEntityDummyData;
 import com.doctoroffice.entity.PatientEntity;
 import com.doctoroffice.repository.PatientRepository;
+import com.doctoroffice.service.mapper.RegisterPatientRequestToPatientEntity;
+import com.doctoroffice.service.mapper.RegisterPatientResponseToPatientEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +22,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PatientServiceTest {
-
+    private RegisterPatientRequestToPatientEntity mapperRequest;
+    private RegisterPatientResponseToPatientEntity mapperResponse;
     @Mock
     private PatientRepository patientRepository;
     @InjectMocks
@@ -61,7 +64,7 @@ public class PatientServiceTest {
         when(patientRepository.save(samplePatient)).
                 thenReturn(samplePatient);
         //When
-        Integer patientEntityId = sut.saveOrUpdate(samplePatient);
+        Integer patientEntityId = mapperResponse.asPatientEntity(sut.saveOrUpdate(mapperRequest.asRegisterPatientRequest(samplePatient))).getId();
         //Then
         assertEquals(patientEntityId, Integer.valueOf(1));
 

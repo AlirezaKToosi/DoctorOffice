@@ -6,5 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class PatientIgnoreMixin {
     @JsonIgnore
     public abstract Integer getId();
-
+    @JsonIgnore
+    public abstract Integer getnationalId();
 }

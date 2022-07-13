@@ -1,7 +1,6 @@
 package com.doctoroffice.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,10 +14,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
 @Setter
 @Getter
-public class PatientEntity {
+public class PatientEntity extends BaseAuditingEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     @SequenceGenerator(name = "generator", sequenceName = "SQ_PATIENT", allocationSize = 1)

@@ -1,8 +1,13 @@
 package com.doctoroffice.controller;
 
+import com.doctoroffice.dto.request.RegisterPatientRequest;
+import com.doctoroffice.dto.response.RegisterPatientResponse;
 import com.doctoroffice.dummydata.PatientEntityDummyData;
 import com.doctoroffice.entity.PatientEntity;
 import com.doctoroffice.service.PatientService;
+import com.doctoroffice.service.mapper.RegisterPatientRequestToPatientEntity;
+import com.doctoroffice.service.mapper.RegisterPatientResponseToPatientEntity;
+import fr.xebia.extras.selma.Selma;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +30,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PatientControllerTest {
-
+    private RegisterPatientRequestToPatientEntity mapperRequest=
+            Selma.builder(RegisterPatientRequestToPatientEntity.class).build();
+    private RegisterPatientResponseToPatientEntity mapperResponse=
+            Selma.builder(RegisterPatientResponseToPatientEntity.class).build();
     @BeforeEach
     void setUp() {
     }
@@ -82,12 +90,12 @@ public class PatientControllerTest {
     @Test
     public void SaveOrUpdateNewPatient_returnValidPatientId() throws Exception {
         //Given
-        PatientEntity samplePatient = PatientEntityDummyData.getValidPatientEntity(1);
+        RegisterPatientRequest samplePatient = mapperRequest.asRegisterPatientRequest(PatientEntityDummyData.getValidPatientEntity(1));
         when(patientController.patientService.saveOrUpdate(samplePatient)).
-                thenReturn(1);
+                thenReturn(mapperResponse.asRegisterPatientResponse(PatientEntityDummyData.getValidPatientEntity(1)));
         //When
-        Integer patientEntityId = patientService.saveOrUpdate(samplePatient);
+        RegisterPatientResponse patientResponse=patientService.saveOrUpdate(samplePatient);
         //Then
-        assertEquals(patientEntityId, Integer.valueOf(1));
+        assertEquals(mapperResponse.asPatientEntity(patientResponse).getId(), Integer.valueOf(1));
     }
 }

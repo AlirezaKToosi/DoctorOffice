@@ -10,18 +10,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.doctoroffice.dto.request.RegisterPatientRequest;
+import com.doctoroffice.dto.response.RegisterPatientResponse;
 
 import java.util.List;
 
-//mark class as Controller
+    /**
+      mark class as Controller
+     */
+
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api")
 public class PatientController {
-    //Autowired the PatientService class
+    /**
+     *Autowired the PatientService class
+     */
     @Autowired
     PatientService patientService;
 
-    //creating a get mapping that retrieves all the patients detail from the database
+    /**
+     creating a get mapping that retrieves all the patients detail from the database
+     */
     @GetMapping("/patient")
     private ResponseEntity<?> getAllPatients() throws JsonProcessingException {
         List<PatientEntity> patientList=patientService.getAllPatient();
@@ -31,7 +40,9 @@ public class PatientController {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(jsonString);
     }
 
-    //creating a get mapping that returns the specific patient with it's id from database
+    /**
+     creating a get mapping that returns the specific patient with it's id from database
+     */
     @GetMapping("/patient/{id}")
     private ResponseEntity getPatientById(@PathVariable("id") Integer id) throws Exception {
         PatientEntity patientEntity=patientService.getById(id);
@@ -41,15 +52,19 @@ public class PatientController {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(JsonString);
     }
 
-    //creating post mapping that save new patient detail in the database
+        /**
+         creating post mapping that save new patient detail in the database
+         */
     @PostMapping("/patient")
-    private Integer savePatient(@RequestBody PatientEntity patient) {
-        return (patientService.saveOrUpdate(patient));
+    private void savePatient(@RequestBody RegisterPatientRequest patient) {
+        patientService.saveOrUpdate(patient);
     }
 
-    //creating put mapping that update the patient detail in the database
+        /**
+          creating put mapping that update the patient detail in the database
+         */
     @PutMapping("/patient")
-    private void updatePatient(@RequestBody PatientEntity patient) {
+    private void updatePatient(@RequestBody RegisterPatientRequest patient) {
         patientService.saveOrUpdate(patient);
     }
 
