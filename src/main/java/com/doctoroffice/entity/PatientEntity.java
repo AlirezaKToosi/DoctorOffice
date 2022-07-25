@@ -37,7 +37,7 @@ public class PatientEntity extends BaseAuditingEntity{
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    @Column(name = "ADDRESS")
+    @Column(name = "address")
     private String address;
 
     @Column(name = "GENDER")
