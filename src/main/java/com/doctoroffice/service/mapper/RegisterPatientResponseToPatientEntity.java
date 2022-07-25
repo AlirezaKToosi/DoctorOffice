@@ -7,18 +7,18 @@ package com.doctoroffice.service.mapper;
 
 @Mapper(
         withCustomFields = {
-                @Field({"NATIONAL_ID", "nationalId"}),
-                @Field({"FIRSTNAME", "firstname"}),
-                @Field({"LASTNAME", "lastname"}),
-                @Field({"BIRTHDAY", "birthday"}),
-                @Field({"PHONE_NUMBER", "phoneNumber"}),
-                @Field({"ADDRESS", "address"}),
-                @Field({"GENDER", "gender"}),
-                @Field({"INSURANCE_CODE", "insuranceCode"})
+                @Field({"nationalId","nationalId"}),
+                @Field({"firstname","firstname"}),
+                @Field({"lastname","lastname"}),
+                @Field({"birthday","birthday"}),
+                @Field({"phoneNumber","phoneNumber"}),
+                @Field({"address","address"}),
+                @Field({"gender","gender"}),
+                @Field({"insuranceCode","insuranceCode"})
         },
-        withIgnoreFields = "id"
+        withIgnoreFields = {"createdBy","createdDate","lastModifiedBy","lastModifiedDate","id"}
 )
-public interface RegisterPatientResponseToPatientEntity {
+public interface RegisterPatientResponseToPatientEntity{
 
     // Returns a new instance of PersonDTO mapped from Person source
     RegisterPatientResponse asRegisterPatientResponse(PatientEntity source);
