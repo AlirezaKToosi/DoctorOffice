@@ -50,7 +50,7 @@ public class PatientController {
     private ResponseEntity savePatient(@Valid @RequestBody RegisterPatientRequest patient, BindingResult bindingResult){
         try {
             if (bindingResult.hasErrors()) {
-                System.out.println("error");
+                return new ResponseEntity<>("Error in parameters, Patient with this information can not add to database",HttpStatus.NOT_FOUND);
             }
             patientService.saveOrUpdate(patient);
             return new ResponseEntity<>("Patient has been added to database",HttpStatus.NOT_FOUND);
@@ -68,7 +68,7 @@ public class PatientController {
     private ResponseEntity updatePatient(@Valid @RequestBody RegisterPatientRequest patient,BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
-                System.out.println("error");
+                return new ResponseEntity<>("Error in parameters, Patient with this information can not add to database",HttpStatus.NOT_FOUND);
             }
             patientService.saveOrUpdate(patient);
             return new ResponseEntity<>("Patient has been updated",HttpStatus.NOT_FOUND);

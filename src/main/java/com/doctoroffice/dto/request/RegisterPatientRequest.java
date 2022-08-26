@@ -35,7 +35,6 @@ public class RegisterPatientRequest {
     /**
      * birthday
      */
-
     private Date birthday;
     /**
      phoneNumber

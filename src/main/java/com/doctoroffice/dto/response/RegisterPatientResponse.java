@@ -34,7 +34,6 @@ public class RegisterPatientResponse {
     /**
      * birthday
      */
-    @NotBlank
     private Date birthday;
     /**
      phoneNumber

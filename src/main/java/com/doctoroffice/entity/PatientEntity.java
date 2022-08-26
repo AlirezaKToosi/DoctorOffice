@@ -37,7 +37,6 @@ public class PatientEntity extends BaseAuditingEntity{
     private String lastname;
 
     @Column(name = "BIRTHDAY")
-    @NotBlank
     private Date birthday;
 
     @Column(name = "PHONE_NUMBER")
