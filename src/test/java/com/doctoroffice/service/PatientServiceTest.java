@@ -1,6 +1,6 @@
 package com.doctoroffice.service;
 
-import com.doctoroffice.dto.PatientIgnoreMixin;
+import com.doctoroffice.doctorofficeexception.DoctorOfficeException;
 import com.doctoroffice.dto.request.RegisterPatientRequest;
 import com.doctoroffice.dto.response.RegisterPatientResponse;
 import com.doctoroffice.dummydata.PatientEntityDummyData;
@@ -10,8 +10,6 @@ import com.doctoroffice.entity.PatientEntity;
 import com.doctoroffice.repository.PatientRepository;
 import com.doctoroffice.service.mapper.RegisterPatientRequestToPatientEntity;
 import com.doctoroffice.service.mapper.RegisterPatientResponseToPatientEntity;
-import lombok.RequiredArgsConstructor;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -51,7 +49,7 @@ public class PatientServiceTest {
                 .thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
         when(patientRepository.findById(1))
                 .thenReturn(Optional.of(PatientEntityDummyData.getValidListOfPatientEntity().get(0)));
-        when(mapperResponse.asRegisterPatientResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
+        when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(0));
         //When
         RegisterPatientResponse patient = sut.getById("0015478596");
@@ -72,11 +70,11 @@ public class PatientServiceTest {
         //Given
         when(patientRepository.findAll())
                 .thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
-        when(mapperResponse.asRegisterPatientResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
+        when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(0));
-        when(mapperResponse.asRegisterPatientResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(1)))
+        when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(1)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(1));
-        when(mapperResponse.asRegisterPatientResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(2)))
+        when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(2)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(2));
          //When
         List<RegisterPatientResponse> patients = sut.getAllPatient();
@@ -94,8 +92,8 @@ public class PatientServiceTest {
         when(patientRepository.findAll()).thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
         when(patientRepository.save(SamplePatientEntity)).thenReturn(SamplePatientEntity);
         when(patientRepository.findById(1)).thenReturn(Optional.of(SamplePatientEntity));
-        when(mapperResponse.asRegisterPatientResponse(SamplePatientEntity)).thenReturn(samplePatientResponse);
-        when(mapperRequest.asPatientEntity(samplePatientRequest)).thenReturn(SamplePatientEntity);
+        when(mapperResponse.EntityToResponse(SamplePatientEntity)).thenReturn(samplePatientResponse);
+        when(mapperRequest.RequestToEntity(samplePatientRequest)).thenReturn(SamplePatientEntity);
         //When
         String NationalId = sut.saveOrUpdate(samplePatientRequest).getNationalId();
         //Then
@@ -109,7 +107,7 @@ public class PatientServiceTest {
                 .thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
         when(patientRepository.findById(1))
                 .thenReturn(Optional.of(PatientEntityDummyData.getValidListOfPatientEntity().get(0)));
-        when(mapperResponse.asRegisterPatientResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
+        when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(0));
         //When
         patientRepository.deleteById(PatientEntityDummyData.getValidPatientEntity(1).getId());

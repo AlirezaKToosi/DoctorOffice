@@ -1,54 +1,56 @@
 package com.doctoroffice.dto.request;
 
+
+import com.doctoroffice.entity.CheckNationalId;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 
-@Data
-@Builder
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterPatientRequest {
-
     /**
      * nationalId
      */
-    @NotBlank
+    @NotBlank(message = "NationalId cannot be empty")
+    @CheckNationalId
     private String nationalId;
     /**
      * firstname
      */
-    @NotBlank
+    @NotBlank(message = "firstname cannot be empty")
     private String firstname;
     /**
      * lastname
      */
-    @NotBlank
+    @NotBlank(message = "lastname cannot be empty")
     private String lastname;
     /**
      * birthday
      */
-    @NotBlank
+
     private Date birthday;
     /**
      phoneNumber
      */
-    @NotBlank
+    @NotBlank(message = "phoneNumber cannot be empty")
     private String phoneNumber;
     /**
      address
      */
-    @NotBlank
+    @NotBlank(message = "address cannot be empty")
     private String address;
     /**
      gender
      */
-    @NotBlank
+    @NotBlank(message = "gender cannot be empty")
     private String gender;
     /**
      insuranceCode

@@ -1,15 +1,17 @@
 package com.doctoroffice.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import com.doctoroffice.entity.CheckNationalId;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-@Data
-@Builder
+
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterPatientResponse {
@@ -17,6 +19,7 @@ public class RegisterPatientResponse {
      * nationalId
      */
     @NotBlank
+    @CheckNationalId
     private String nationalId;
     /**
      * firstname
@@ -52,5 +55,4 @@ public class RegisterPatientResponse {
      insuranceCode
      */
     private String insuranceCode;
-
 }
