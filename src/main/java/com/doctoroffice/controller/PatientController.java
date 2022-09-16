@@ -15,78 +15,46 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/patient")
 public class PatientController {
    @Autowired
     private PatientService patientService;
 
-    /**
-     creating a get mapping that retrieves all the patients detail from the database
-     */
-    @GetMapping("/patient")
+    @GetMapping("")
     private ResponseEntity<List<RegisterPatientResponse>> getAllPatients(){
         List<RegisterPatientResponse> patientList=patientService.getAllPatient();
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(patientList);
     }
 
-    /**
-     creating a get mapping that returns the specific patient with it's id from database
-     */
-    @GetMapping("/patient/{id}")
-    private ResponseEntity<RegisterPatientResponse> getPatientById(@PathVariable("id") String id)  {
+    @GetMapping("/{NationalId}")
+    private ResponseEntity<RegisterPatientResponse> getPatientById(@PathVariable("NationalId") String id)  {
         RegisterPatientResponse patientEntityResponse= null;
-        try {
-            patientEntityResponse = patientService.getById(id);
-        } catch (DoctorOfficeException e) {
-            System.out.println(e.getMessage());
-        }
+        patientEntityResponse = patientService.getByNationalId(id);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(patientEntityResponse);
     }
 
-        /**
-         creating post mapping that save new patient detail in the database
-         */
-    @PostMapping("/patient")
+    @PostMapping("")
     private ResponseEntity savePatient(@Valid @RequestBody RegisterPatientRequest patient, BindingResult bindingResult){
-        try {
             if (bindingResult.hasErrors()) {
                 return new ResponseEntity<>("Error in parameters, Patient with this information can not add to database",HttpStatus.NOT_FOUND);
             }
             patientService.saveOrUpdate(patient);
             return new ResponseEntity<>("Patient has been added to database",HttpStatus.NOT_FOUND);
-
-        } catch (DoctorOfficeException e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>("Patient with this information can not add to database",HttpStatus.NOT_FOUND);
-        }
     }
 
-        /**
-          creating put mapping that update the patient detail in the database
-         */
-    @PutMapping("/patient")
+    @PutMapping("")
     private ResponseEntity updatePatient(@Valid @RequestBody RegisterPatientRequest patient,BindingResult bindingResult) {
-        try {
             if (bindingResult.hasErrors()) {
                 return new ResponseEntity<>("Error in parameters, Patient with this information can not add to database",HttpStatus.NOT_FOUND);
             }
             patientService.saveOrUpdate(patient);
             return new ResponseEntity<>("Patient has been updated",HttpStatus.NOT_FOUND);
 
-        } catch (DoctorOfficeException e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>("Patient with this information can not be updated",HttpStatus.NOT_FOUND);
-        }
     }
 
-    @DeleteMapping("/patient/{id}")
-    private ResponseEntity<String> deleteById(@PathVariable("id") String id){
-        try {
+    @DeleteMapping("/{NationalId}")
+    private ResponseEntity<String> deleteById(@PathVariable("NationalId") String id){
             patientService.deleteById(id);
             return new ResponseEntity<>("Patient with NationalId "+id+" has been deleted", HttpStatus.ACCEPTED);
-        } catch (DoctorOfficeException e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>("Patient with this NationalId Does not exist",HttpStatus.NOT_FOUND);
         }
-    }
 }

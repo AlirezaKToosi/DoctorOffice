@@ -1,6 +1,5 @@
 package com.doctoroffice.service;
 
-import com.doctoroffice.doctorofficeexception.DoctorOfficeException;
 import com.doctoroffice.dto.request.RegisterPatientRequest;
 import com.doctoroffice.dto.response.RegisterPatientResponse;
 import com.doctoroffice.dummydata.PatientEntityDummyData;
@@ -14,13 +13,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,12 +46,12 @@ public class PatientServiceTest {
         //Given
         when(patientRepository.findAll())
                 .thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
-        when(patientRepository.findById(1))
+        when(patientRepository.findByNationalId("0015478596"))
                 .thenReturn(Optional.of(PatientEntityDummyData.getValidListOfPatientEntity().get(0)));
         when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(0));
         //When
-        RegisterPatientResponse patient = sut.getById("0015478596");
+        RegisterPatientResponse patient = sut.getByNationalId("0015478596");
         //Then
         assertEquals(patient.getNationalId(), "0015478596");
     }
@@ -60,9 +59,9 @@ public class PatientServiceTest {
     @Test(expected = Exception.class)
     public void callFindByNotValidId_returnEmptyValue() throws Exception {
         //Given
-        when(patientRepository.findById(any())).thenReturn(Optional.empty());
+        when(patientRepository.findByNationalId(any())).thenReturn(Optional.empty());
         //When
-       sut.getById("0015478590");
+       sut.getByNationalId("0015478590");
     }
 
     @Test
@@ -91,7 +90,7 @@ public class PatientServiceTest {
         PatientEntity SamplePatientEntity= PatientEntityDummyData.getValidPatientEntity(1);
         when(patientRepository.findAll()).thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
         when(patientRepository.save(SamplePatientEntity)).thenReturn(SamplePatientEntity);
-        when(patientRepository.findById(1)).thenReturn(Optional.of(SamplePatientEntity));
+        when(patientRepository.findByNationalId("0015478596")).thenReturn(Optional.of(SamplePatientEntity));
         when(mapperResponse.EntityToResponse(SamplePatientEntity)).thenReturn(samplePatientResponse);
         when(mapperRequest.RequestToEntity(samplePatientRequest)).thenReturn(SamplePatientEntity);
         //When
@@ -105,7 +104,7 @@ public class PatientServiceTest {
 
         when(patientRepository.findAll())
                 .thenReturn(PatientEntityDummyData.getValidListOfPatientEntity());
-        when(patientRepository.findById(1))
+        when(patientRepository.findByNationalId("0015478596"))
                 .thenReturn(Optional.of(PatientEntityDummyData.getValidListOfPatientEntity().get(0)));
         when(mapperResponse.EntityToResponse(PatientEntityDummyData.getValidListOfPatientEntity().get(0)))
                 .thenReturn(PatientResponseDummyData.getValidListOfPatientResponse().get(0));
@@ -120,7 +119,7 @@ public class PatientServiceTest {
     public void DeleteUnavailablePatientById_returnEmptyValue() throws Exception {
 
         //Given
-        when(patientRepository.findById(any())).thenReturn(Optional.empty());
+        when(patientRepository.findByNationalId(any())).thenReturn(Optional.empty());
         //When
         sut.deleteById(PatientEntityDummyData.getValidPatientEntity(1).getNationalId());
 

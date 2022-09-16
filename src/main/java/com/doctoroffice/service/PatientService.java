@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This service contains some services which is related with patient Entity
@@ -25,6 +25,7 @@ import java.util.Optional;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Transactional
 @Service
 public class PatientService {
 
@@ -37,30 +38,38 @@ public class PatientService {
 
     /**
      *    getting all patient information from database
+    @return list of RegisterPatientsResponse
      */
     public List<RegisterPatientResponse> getAllPatient() {
         List<RegisterPatientResponse> patientsResponse = new ArrayList<RegisterPatientResponse>();
         List<PatientEntity> patients = patientRepository.findAll();
-        for (int i=0;i<patients.size();i++) {
-            patientsResponse.add(mapperResponse.EntityToResponse(patients.get(i)));
-        }
+        patients.forEach(patientEntity -> patientsResponse.add(mapperResponse.EntityToResponse(patientEntity)));
         return patientsResponse ;
     }
 
     /**
      * getting a patient information by id from database
+     * @return a patient with specific National id.
+     * @param NationalId
      */
-    public RegisterPatientResponse getById(String NationalId) throws DoctorOfficeException {
-        PatientEntity result=patientRepository.findByNationalId(NationalId)
-                .orElseThrow(()-> new DoctorOfficeException("This patient id is not available"));
+    public RegisterPatientResponse getByNationalId(String NationalId) {
+        PatientEntity result= null;
+        try {
+            result = patientRepository.findByNationalId(NationalId)
+                    .orElseThrow(()-> new DoctorOfficeException("This patient id is not available"));
+        } catch (DoctorOfficeException e) {
+            throw new RuntimeException(e);
+        }
         return mapperResponse.EntityToResponse(result);
     }
 
     /**
      * saving a specific patient by using the method save()
+     * @return a patient response which is added to database.
+     * @param requestPatient
      */
-    public RegisterPatientResponse saveOrUpdate(RegisterPatientRequest request) throws DoctorOfficeException {
-        PatientEntity NewPatient=mapperRequest.RequestToEntity(request);
+    public RegisterPatientResponse saveOrUpdate(RegisterPatientRequest requestPatient) {
+        PatientEntity NewPatient=mapperRequest.RequestToEntity(requestPatient);
         if (patientRepository.findByNationalId(NewPatient.getNationalId()).isPresent()) {
             PatientEntity OldPatient=patientRepository.findByNationalId(NewPatient.getNationalId()).get();
             OldPatient.setLastModifiedBy(1L);
@@ -83,10 +92,17 @@ public class PatientService {
 
     /**
      * deletes a specific patient base on it's id by using the method delete()
+     * @param NationalId
+     * @throws DoctorOfficeException
      */
-    public void deleteById(String NationalId) throws DoctorOfficeException {
-        patientRepository.findByNationalId(NationalId).orElseThrow(()
-                ->new DoctorOfficeException("This patient id is not available"));
-        patientRepository.deleteById(patientRepository.findByNationalId(NationalId).get().getId());
+    public void deleteById(String NationalId) {
+        try {
+            PatientEntity patientEntity=patientRepository.findByNationalId(NationalId).orElseThrow(()
+                    ->new DoctorOfficeException("This patient id is not available"));
+            patientRepository.deleteById(patientEntity.getId());
+        } catch (DoctorOfficeException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

@@ -14,7 +14,6 @@ import java.util.Optional;
  */
 
 @Repository
-@Transactional
 public interface PatientRepository extends CrudRepository<PatientEntity, Integer> {
     List<PatientEntity> findAll();
     Optional<PatientEntity> findByNationalId(String NationalId);
